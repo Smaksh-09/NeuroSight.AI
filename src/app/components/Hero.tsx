@@ -1,72 +1,78 @@
-'use client';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+"use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import Image from "next/image";
 
 export default function HeroSection() {
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { duration: 1, ease: "power3.out" } });
+
+    // Fade in & slide elements
+    tl.fromTo(
+      containerRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.6 }
+    )
+      .fromTo(
+        //@ts-ignore
+        textRef.current.children,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, stagger: 0.2 },
+        "-=0.4"
+      )
+      .fromTo(
+        imageRef.current,
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1 },
+        "-=0.5"
+      )
+      .fromTo(
+        buttonRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0 },
+        "-=0.3"
+      );
+  }, []);
+
   return (
-    <section className="min-h-screen bg-white">
+    <section ref={containerRef} className="min-h-screen bg-white">
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center px-6 min-h-screen">
         {/* Left Content */}
-        <div className="md:w-1/2 text-center md:text-left space-y-6">
+        <div ref={textRef} className="md:w-1/2 text-center md:text-left space-y-6">
           {/* Main Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight"
-          >
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
             Revolutionize Your Health Insights<br />
             <span className="text-blue-600">with AI-Powered Diagnostics</span>
-          </motion.h1>
+          </h1>
 
           {/* Subheading */}
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-600 leading-relaxed"
-          >
-           Upload MRI, X-ray, or CT scans and receive instant AI-driven insights to help you make informed health decisions.
-          </motion.p>
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+            Upload MRI, X-ray, or CT scans and receive instant AI-driven insights to help you make informed health decisions.
+          </p>
 
           {/* Call-to-Action Button */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex justify-center md:justify-start space-x-4 pt-6"
-          >
-            <motion.a
+          <div ref={buttonRef} className="flex justify-center md:justify-start space-x-4 pt-6">
+            <a
               href="/appointment"
-              whileHover={{ scale: 1.05 }}
               className="px-8 py-4 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition text-lg font-semibold"
             >
               Get Started
-            </motion.a>
-          </motion.div>
+            </a>
+          </div>
         </div>
 
         {/* Right Image */}
-        <motion.div
-          className="md:w-1/2 flex justify-center items-center"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <div ref={imageRef} className="md:w-1/2 flex justify-center items-center">
           <div className="relative w-full h-[500px]">
-            <Image
-              src="/final.jpg"
-              alt="Medical Analysis"
-              fill
-              style={{ objectFit: 'contain' }}
-              priority
-            />
+            <img src="/DOCO.jpg" alt="Medical Analysis" className="w-full" />
           </div>
-        </motion.div>
+        </div>
       </div>
-
-      {/* Appointment Booking Section */}
-      
     </section>
   );
 }
