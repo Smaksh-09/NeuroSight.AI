@@ -1,13 +1,12 @@
 import axios from "axios";
-import fs from "fs";
 import FormData from "form-data";
 
 
 export async function roboflowCall(buffer:Buffer,fileName:string){
-    const ROBOFLOW_API_KEY=process.env.ROBOFLOW_API_KEY;
+    const ROBOFLOW_BRAIN_API_KEY=process.env.ROBOFLOW_BRAIN_API_KEY;
     const ROBOFLOW_MODEL_ID=process.env.ROBOFLOW_MODEL_ID;
 
-    const endpoint="";
+    const endpoint="https://detect.roboflow.com/bt-cohqx/1";
 
     const formData=new FormData();
     formData.append("file",buffer,{filename:fileName});

@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import { FaBrain, FaBone, FaSpinner, FaFileAlt } from 'react-icons/fa';
+import NavBar from '../components/NavBar';
 
 // Register ScrollTrigger
 if (typeof window !== 'undefined') {
@@ -111,6 +112,8 @@ export default function Features() {
   }, []);
 
   return (
+    <div>
+    <NavBar/>
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-20">
       <div ref={containerRef} className="container mx-auto px-4">
         {/* Header Section */}
@@ -170,6 +173,7 @@ export default function Features() {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 }
