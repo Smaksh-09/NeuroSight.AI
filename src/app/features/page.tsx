@@ -66,7 +66,7 @@ export default function Features() {
         "Trend analysis",
         "Historical comparison"
       ],
-      route: "/features/reports"
+      route: "/features/medical-report"
     }
   ];
 
