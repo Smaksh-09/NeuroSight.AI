@@ -1,19 +1,44 @@
 import mongoose from "mongoose";
 
 const JobSchema = new mongoose.Schema({
-    userId:{
-        type:String,
+    userId: {
+        type: String,
+        default: 'anonymous' // Default value for unauthenticated users
     },
-    fileName:{type:String, required:true},
-    filePath:{type:String, required:true},
-    status:{type:String, enum:["pending", "completed", "processing","failed",], default:"pending"},
-    result:{type:mongoose.Schema.Types.Mixed, default: null},
-    createdAT:{type:Date, default:Date.now},
-    updatedAT:{type:Date}
+    fileName: { 
+        type: String, 
+        required: true 
+    },
+    fileType: {
+        type: String,
+        default: 'image'
+    },
+    status: { 
+        type: String, 
+        enum: ["pending", "processing", "completed", "failed"], 
+        default: "pending" 
+    },
+    result: { 
+        type: mongoose.Schema.Types.Mixed, 
+        default: null 
+    },
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    },
+    updatedAt: { 
+        type: Date,
+        default: Date.now 
+    }
 });
-JobSchema.pre("save",function(next){
-    this.updatedAT=new Date();
+
+// Middleware to update `updatedAt` before saving
+JobSchema.pre("save", function(next) {
+    this.updatedAt = new Date();
     next();
 });
-const Job=mongoose.model("Job",JobSchema);
+
+// ✅ Prevent model overwrite by checking if already compiled
+const Job = mongoose.models.Job || mongoose.model("Job", JobSchema);
+
 export default Job;

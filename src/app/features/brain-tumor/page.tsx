@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 import { FaCloudUploadAlt, FaSpinner } from 'react-icons/fa';
 
 export default function Brain() {
@@ -45,7 +45,7 @@ export default function Brain() {
 
     try {
       // Upload image and get Roboflow results
-      const response = await fetch('/auth/upload', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });

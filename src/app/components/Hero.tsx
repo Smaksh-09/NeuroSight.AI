@@ -58,7 +58,7 @@ export default function HeroSection() {
           {/* Call-to-Action Button */}
           <div ref={buttonRef} className="flex justify-center md:justify-start space-x-4 pt-6">
             <a
-              href="/appointment"
+              href="/features"
               className="px-8 py-4 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition text-lg font-semibold"
             >
               Get Started
