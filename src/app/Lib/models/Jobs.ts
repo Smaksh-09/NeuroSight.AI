@@ -2,34 +2,28 @@ import mongoose from "mongoose";
 
 const JobSchema = new mongoose.Schema({
     userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
+    type: {
         type: String,
-        default: 'anonymous' // Default value for unauthenticated users
+        required: true,
+        enum: ['brain', 'lung', 'skin']
     },
-    fileName: { 
-        type: String, 
-        required: true 
-    },
-    fileType: {
+    result: {
         type: String,
-        default: 'image'
+        required: true
     },
-    status: { 
-        type: String, 
-        enum: ["pending", "processing", "completed", "failed"], 
-        default: "pending" 
-    },
-    result: { 
-        type: mongoose.Schema.Types.Mixed, 
-        default: null 
-    },
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
     updatedAt: { 
         type: Date,
         default: Date.now 
     }
+
 });
 
 // Middleware to update `updatedAt` before saving

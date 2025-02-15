@@ -50,7 +50,11 @@ export default function Login() {
         throw new Error(data.error || 'Login failed');
       }
 
-      login(data.token,{username: data.username, email: data.email});
+      login(data.token, {
+        username: data.username, 
+        email: data.email,
+        createdAt: data.createdAt
+      });
       router.push('/features');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');

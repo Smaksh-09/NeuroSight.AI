@@ -66,7 +66,11 @@ export default function Signup() {
         throw new Error(loginData.error || 'Login failed');
       }
 
-      login(loginData.token, { username, email });
+      login(loginData.token, { 
+        username, 
+        email,
+        createdAt: new Date().toISOString() 
+      });
       router.push('/features');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signup failed');

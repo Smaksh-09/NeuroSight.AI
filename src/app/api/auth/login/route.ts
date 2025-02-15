@@ -32,7 +32,13 @@ export async function POST(request:NextRequest) {
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
     return new Response(
-      JSON.stringify({ success: true, token, user: { id: user._id, email: user.email } }),
+      JSON.stringify({
+        success: true,
+        token,
+        username: user.username,
+        email: user.email,
+        createdAt: user.createdAt
+      }),
       { status: 200 }
     );
   } catch (error) {
