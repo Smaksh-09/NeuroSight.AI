@@ -12,8 +12,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const formRef = useRef(null);
-  const decorationRef = useRef(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const decorationRef = useRef<HTMLDivElement>(null);
   const { login } = useAuth();
   const router = useRouter();
 
@@ -50,7 +50,7 @@ export default function Login() {
         throw new Error(data.error || 'Login failed');
       }
 
-      login(data.token);
+      login(data.token,{username: data.username, email: data.email});
       router.push('/features');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');

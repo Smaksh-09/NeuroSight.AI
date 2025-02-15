@@ -1,8 +1,15 @@
 'use client';
 import Link from 'next/link';
+import { useAuth } from '../context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function NavBar() {
-  const isLoggedIn = false; // Replace with your authentication logic
+  const { isAuthenticated, user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleProfileClick = () => {
+    router.push('/profile');
+  };
 
   return (
     <nav className="bg-white px-8 py-4 shadow-md">
@@ -10,7 +17,6 @@ export default function NavBar() {
         
         {/* Logo Section */}
         <Link href="/" className="flex items-center space-x-2">
-           {/* Replace with your logo */}
           <span className="text-xl font-bold text-blue-500">NeuroSight</span>
         </Link>
 
@@ -19,13 +25,14 @@ export default function NavBar() {
           <Link href="/" className="text-gray-700 hover:text-blue-500 transition-colors">
             Home
           </Link>
+          {isAuthenticated && (
+            <Link href="/features" className="text-gray-700 hover:text-blue-500 transition-colors">
+              Features
+            </Link>
+          )}
           <Link href="/about" className="text-gray-700 hover:text-blue-500 transition-colors">
             About
           </Link>
-          <Link href="/services" className="text-gray-700 hover:text-blue-500 transition-colors">
-            Services
-          </Link>
-          
           <Link href="/contact" className="text-gray-700 hover:text-blue-500 transition-colors">
             Contact
           </Link>
@@ -33,7 +40,7 @@ export default function NavBar() {
 
         {/* Action Buttons */}
         <div className="flex items-center space-x-4">
-          {!isLoggedIn ? (
+          {!isAuthenticated ? (
             <>
               <Link
                 href="/login"
@@ -49,17 +56,13 @@ export default function NavBar() {
               </Link>
             </>
           ) : (
-            <>
-              {/* Replace these with actual user initials or profile links */}
-              <button className="px-4 py-2 text-blue-500 border border-blue-500 rounded-full hover:bg-blue-50 transition">
-                Dr
-              </button>
-              <button className="px-4 py-2 text-blue-500 border border-blue-500 rounded-full hover:bg-blue-50 transition">
-                Bh
-              </button>
-            </>
+            <button
+              onClick={handleProfileClick}
+              className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center text-lg font-semibold hover:bg-blue-600 transition-colors"
+            >
+              {user?.username?.charAt(0).toUpperCase() || 'U'}
+            </button>
           )}
-          
         </div>
       </div>
     </nav>

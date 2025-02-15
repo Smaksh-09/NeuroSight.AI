@@ -13,8 +13,8 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const formRef = useRef(null);
-  const decorationRef = useRef(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const decorationRef = useRef<HTMLDivElement>(null);
   const { login } = useAuth();
   const router = useRouter();
 
@@ -66,7 +66,7 @@ export default function Signup() {
         throw new Error(loginData.error || 'Login failed');
       }
 
-      login(loginData.token);
+      login(loginData.token, { username, email });
       router.push('/features');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Signup failed');
