@@ -31,29 +31,29 @@ export default function Features() {
     },
     {
       id: 2,
-      title: "Musculoskeletal System Analysis",
+      title: "Lungs Tumor Detection & Analysis",
       icon: <FaBone className="w-16 h-16" />,
-      description: "Comprehensive analysis of bones, joints, and surrounding tissues. Identify fractures, abnormalities, and degenerative conditions with state-of-the-art AI technology.",
+      description: "Our AI-powered Lung Tumor Detection and Analysis feature leverages advanced machine learning models to analyze MRI and CT scans, identifying potential lung tumors and providing detailed analysis.",
       benefits: [
-        "Fracture detection",
-        "Joint space analysis",
-        "Bone density assessment",
-        "Arthritis progression tracking"
+        "Automated Tumor Detection",
+        "Confidence Score & Severity Analysis",
+        "Detailed AI-Generated Report ",
+        "Multi-Scan Support"
       ],
-      route: "/features/musculoskeletal"
+      route: "/features/lungs"
     },
     {
       id: 3,
-      title: "Spine Analysis",
+      title: "Skin Cancer Detection & Analysis",
       icon: <FaSpinner className="w-16 h-16" />,
-      description: "Detailed spine examination for various conditions including disc herniation, spinal stenosis, and vertebral fractures. Get comprehensive reports with AI-assisted measurements.",
+      description: "Our AI-powered Skin Cancer Detection & Analysis system leverages deep learning models to analyze dermatoscopic images and identify potential signs of skin cancer, including melanoma, basal cell carcinoma, and squamous cell carcinoma. The system detects abnormalities in skin lesions and provides real-time insights to assist in early diagnosis and treatment planning.",
       benefits: [
-        "Disc herniation detection",
-        "Spinal alignment analysis",
-        "Vertebral spacing measurement",
-        "Stenosis assessment"
+        "AI-Powered Lesion Detection",
+        "Classification & Severity Assessment",
+        "AI-Generated Diagnostic Report ",
+        "Multi-Image Support "
       ],
-      route: "/features/spine"
+      route: "/features/skin"
     },
     {
       id: 4,
