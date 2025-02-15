@@ -74,6 +74,19 @@ export default function Skin() {
       const analysisResult = await geminiResponse.json();
       setResult(analysisResult.result);
 
+      // Save to history
+      await fetch('/api/user/history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${document.cookie.split('token=')[1]}`
+        },
+        body: JSON.stringify({
+          type: 'skin',
+          result: analysisResult.result
+        }),
+      });
+
       gsap.fromTo(resultRef.current,
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.6 }

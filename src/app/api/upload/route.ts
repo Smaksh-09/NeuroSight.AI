@@ -30,18 +30,6 @@ apiRoute.use(upload.single('image'));
 
 export async function POST(req: Request) {
   try {
-    // Get user ID from token
-    const userId = await verifyAuth(req as any);
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    // Connect to DB
-    await connectDB();
-
     const formData = await req.formData();
     const file = formData.get('image') as File;
     
@@ -58,20 +46,8 @@ export async function POST(req: Request) {
     // Call Roboflow API
     const inferenceResult = await roboflowCall(buffer, file.name);
 
-    // Create new job with all required fields
-    const newJob = new Job({
-      userId: userId,
-      type: 'brain', // or 'lung' or 'skin' based on the route
-      fileName: file.name,
-      status: "completed",
-      result: JSON.stringify(inferenceResult), // Convert object to string
-      createdAt: new Date()
-    });
-
-    await newJob.save();
-
     return NextResponse.json(
-      { jobId: newJob._id, result: inferenceResult },
+      { result: inferenceResult },
       { status: 200 }
     );
 

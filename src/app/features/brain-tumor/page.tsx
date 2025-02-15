@@ -70,6 +70,18 @@ export default function Brain() {
       const analysisResult = await geminiResponse.json();
       setResult(analysisResult.result);
 
+      // Save to history after Gemini analysis
+      await fetch('/api/user/history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'brain',
+          result: analysisResult.result
+        }),
+      });
+
       // Animate result section
       gsap.fromTo(resultRef.current,
         { opacity: 0, y: 20 },

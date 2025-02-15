@@ -23,4 +23,35 @@ export async function GET(req: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function POST(req: Request) {
+  try {
+    const userId = await verifyAuth(req);
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    await connectDB();
+
+    const { type, result } = await req.json();
+
+    const newJob = new Job({
+      userId,
+      type,
+      result,
+      status: 'completed',
+      createdAt: new Date()
+    });
+
+    await newJob.save();
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error saving to history:', error);
+    return NextResponse.json(
+      { error: 'Failed to save to history' },
+      { status: 500 }
+    );
+  }
 } 

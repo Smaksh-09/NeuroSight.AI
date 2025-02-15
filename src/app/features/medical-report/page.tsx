@@ -59,6 +59,18 @@ export default function MedicalReport() {
       const data = await response.json();
       setAnalysis(data.result);
 
+      // Save to history
+      await fetch('/api/user/history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'report',
+          result: data.result
+        }),
+      });
+
       // Animate result section
       gsap.fromTo(resultRef.current,
         { opacity: 0, y: 20 },

@@ -69,6 +69,22 @@ export default function Profile() {
     });
   };
 
+  const formatResult = (result: string, type: string) => {
+    try {
+      // For brain, skin, and lung results, show the first line as it contains the summary
+      if (['brain', 'skin', 'lung'].includes(type)) {
+        return result.split('\n')[0];
+      }
+      // For medical reports, show the first key finding
+      if (type === 'report') {
+        return result.split('Key Findings:')[1]?.split('\n')[1] || result;
+      }
+      return result;
+    } catch (e) {
+      return result;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <NavBar />
@@ -121,28 +137,27 @@ export default function Profile() {
               {history.map((item) => (
                 <div
                   key={item._id}
-                  className="bg-gray-50 rounded-xl p-6 transition-all hover:shadow-md relative group"
+                  className="bg-white rounded-xl shadow-lg p-6 mb-4"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span className="text-2xl">{getAnalysisTypeIcon(item.type)}</span>
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {item.type} Analysis
-                        </h3>
-                      </div>
-                      <p className="text-gray-700 line-clamp-3">{item.result}</p>
-                      <div className="mt-2 text-sm text-gray-500">
-                        {formatDate(item.createdAt)}
-                      </div>
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 capitalize">
+                        {item.type} Analysis
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </p>
                     </div>
                     <button
                       onClick={() => handleDeleteHistory(item._id)}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-2 text-red-500 hover:text-red-600"
+                      className="text-red-500 hover:text-red-700"
                     >
                       <FaTrash />
                     </button>
                   </div>
+                  <p className="text-gray-700">
+                    {formatResult(item.result, item.type)}
+                  </p>
                 </div>
               ))}
             </div>
