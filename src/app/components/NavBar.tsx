@@ -36,13 +36,13 @@ export default function NavBar() {
           {!isLoggedIn ? (
             <>
               <Link
-                href="/auth/login"
+                href="/login"
                 className="px-4 py-2 text-blue-500 border border-blue-500 rounded-full hover:bg-blue-50 transition"
               >
                 Login
               </Link>
               <Link
-                href="/auth/signup"
+                href="/signup"
                 className="px-4 py-2 text-blue-500 border border-blue-500 rounded-full hover:bg-blue-50 transition"
               >
                 Signup
