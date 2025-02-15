@@ -22,7 +22,14 @@ const JobSchema = new mongoose.Schema({
     updatedAt: { 
         type: Date,
         default: Date.now 
-    }
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: ['pending', 'completed', 'failed'],
+        default: 'pending'
+    },
+    fileName: { type: String, required: false },
 
 });
 

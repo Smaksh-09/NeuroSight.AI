@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/app/Lib/db";
 import Job from "@/app/Lib/models/Jobs";
 import { roboflowCall } from "@/app/Lib/roboflow";
+import { verifyAuth } from "@/app/Lib/auth";
 import multer from 'multer';
 import nextConnect from 'next-connect';
 
@@ -29,6 +30,15 @@ apiRoute.use(upload.single('image'));
 
 export async function POST(req: Request) {
   try {
+    // Get user ID from token
+    const userId = await verifyAuth(req as any);
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     // Connect to DB
     await connectDB();
 
@@ -48,11 +58,14 @@ export async function POST(req: Request) {
     // Call Roboflow API
     const inferenceResult = await roboflowCall(buffer, file.name);
 
-    // Create new job with fileName
+    // Create new job with all required fields
     const newJob = new Job({
+      userId: userId,
+      type: 'brain', // or 'lung' or 'skin' based on the route
       fileName: file.name,
       status: "completed",
-      result: inferenceResult
+      result: JSON.stringify(inferenceResult), // Convert object to string
+      createdAt: new Date()
     });
 
     await newJob.save();
@@ -65,7 +78,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error processing the image:", error);
     return NextResponse.json(
-      { error: `Internal Server Error: ${error instanceof Error ? error.message : 'Unknown error'}` },
+      { error: error instanceof Error ? error.message : 'Failed to process image' },
       { status: 500 }
     );
   }
