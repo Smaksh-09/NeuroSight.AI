@@ -17,24 +17,24 @@ export default function NavBar() {
         
         {/* Logo Section */}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-blue-500">NeuroSight</span>
+          <span className="text-xl font-bold text-white">NeuroSight</span>
         </Link>
 
         {/* Navigation Links */}
         <div className="hidden md:flex space-x-6">
-          <Link href="/" className="text-blue-500 hover:text-blue-500 transition-colors">
+          <Link href="/" className="text-white hover:text-blue-500 transition-colors">
             Home
           </Link>
           {isAuthenticated && (
-            <Link href="/features" className="text-blue-500 hover:text-blue-500 transition-colors">
+            <Link href="/features" className="text-white hover:text-blue-500 transition-colors">
               Features
             </Link>
           )}
-          <Link href="/about" className="text-blue-500 hover:text-blue-500 transition-colors">
+          <Link href="/about" className="text-white hover:text-blue-500 transition-colors">
             About
           </Link>
-          <Link href="/contact" className="text-blue-500 hover:text-blue-500 transition-colors">
-            Contact
+          <Link href="/smartcare" className="text-white hover:text-blue-500 transition-colors">
+            SmartCare
           </Link>
         </div>
 
