@@ -71,14 +71,14 @@ export default function HowTo() {
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white">
+    <section ref={sectionRef} className="py-20">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
             How It Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-blue-100 max-w-2xl mx-auto drop-shadow-md">
             Get started with our AI-powered medical imaging analysis in three simple steps
           </p>
         </div>
@@ -90,29 +90,34 @@ export default function HowTo() {
               key={index}
               //@ts-ignore
               ref={el => stepsRef.current[index] = el}
-              className="relative bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="relative backdrop-blur-md bg-white/10 rounded-xl p-8 
+                border border-blue-300/20 shadow-lg hover:shadow-xl 
+                transition-all duration-300 hover:scale-105 group"
             >
               {/* Step Number */}
-              <div className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="absolute -top-4 -right-4 w-12 h-12 bg-blue-500/80 
+                backdrop-blur-sm rounded-full flex items-center justify-center 
+                group-hover:bg-blue-600/90 transition-colors">
                 <span className="text-white font-bold">{step.number}</span>
               </div>
 
-              {/* Icon */}
-              <div className="mb-6">
+              {/* Icon with updated color */}
+              <div className="mb-6 text-blue-300">
                 {step.icon}
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-md">
                 {step.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-blue-100 leading-relaxed">
                 {step.description}
               </p>
 
-              {/* Connector Line (except for last item) */}
+              {/* Updated connector line */}
               {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-1/2 -right-4 w-8 border-t-2 border-dashed border-blue-300" />
+                <div className="hidden md:block absolute top-1/2 -right-4 w-8 
+                  border-t-2 border-dashed border-blue-300/40" />
               )}
             </div>
           ))}

@@ -12,7 +12,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="bg-white px-8 py-4 shadow-md">
+    <nav className="bg-transparent px-8 py-4 shadow-md">
       <div className="container mx-auto flex items-center justify-between">
         
         {/* Logo Section */}
@@ -22,18 +22,18 @@ export default function NavBar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex space-x-6">
-          <Link href="/" className="text-gray-700 hover:text-blue-500 transition-colors">
+          <Link href="/" className="text-blue-500 hover:text-blue-500 transition-colors">
             Home
           </Link>
           {isAuthenticated && (
-            <Link href="/features" className="text-gray-700 hover:text-blue-500 transition-colors">
+            <Link href="/features" className="text-blue-500 hover:text-blue-500 transition-colors">
               Features
             </Link>
           )}
-          <Link href="/about" className="text-gray-700 hover:text-blue-500 transition-colors">
+          <Link href="/about" className="text-blue-500 hover:text-blue-500 transition-colors">
             About
           </Link>
-          <Link href="/contact" className="text-gray-700 hover:text-blue-500 transition-colors">
+          <Link href="/contact" className="text-blue-500 hover:text-blue-500 transition-colors">
             Contact
           </Link>
         </div>

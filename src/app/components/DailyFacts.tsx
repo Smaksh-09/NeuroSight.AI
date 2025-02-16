@@ -61,19 +61,21 @@ export default function DailyFacts() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-blue-50">
+    <section className="py-20">
       <div ref={containerRef} className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
             Daily Medical Facts
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-blue-100 mb-8 drop-shadow-md">
             Discover interesting facts about healthcare and medical advancements
           </p>
           
           <button
             onClick={handleShowFact}
-            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-blue-600/80 backdrop-blur-sm 
+              text-white rounded-lg shadow-lg hover:bg-blue-700/90 transition-all 
+              duration-300 border border-blue-400/30 hover:scale-105"
           >
             <FaLightbulb className="mr-2" />
             {showFact ? 'Close Fact' : 'Get Daily Fact'}
@@ -82,17 +84,18 @@ export default function DailyFacts() {
           {showFact && (
             <div
               ref={factCardRef}
-              className="mt-8 bg-white rounded-xl shadow-xl p-8 relative"
+              className="mt-8 backdrop-blur-md bg-white/10 rounded-xl shadow-xl p-8 
+                relative border border-blue-300/20"
             >
               <button
                 onClick={handleShowFact}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+                className="absolute top-4 right-4 text-blue-200 hover:text-white transition-colors"
               >
                 <FaTimes />
               </button>
               <div className="flex items-start">
-                <FaLightbulb className="text-blue-500 text-xl flex-shrink-0 mt-1 mr-4" />
-                <p className="text-gray-700 text-lg leading-relaxed text-left">
+                <FaLightbulb className="text-blue-300 text-xl flex-shrink-0 mt-1 mr-4" />
+                <p className="text-blue-100 text-lg leading-relaxed text-left drop-shadow-md">
                   {currentFact}
                 </p>
               </div>
