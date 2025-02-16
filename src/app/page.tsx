@@ -4,6 +4,7 @@ import HowTo from './components/HowTo';
 import DailyFacts from './components/DailyFacts';
 import Background from "./components/Background";
 import SmartCarePromo from "./components/SmartCarePromo";
+import About from "./components/About";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <HowTo />
         <SmartCarePromo />
         <DailyFacts />
+        <About />
       </div>
     </div>
   );
