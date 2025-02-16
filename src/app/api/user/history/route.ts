@@ -5,6 +5,7 @@ import { verifyAuth } from '@/app/Lib/auth';
 
 export async function GET(req: Request) {
   try {
+    //@ts-ignore
     const userId = await verifyAuth(req);
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -27,6 +28,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    //@ts-ignore
     const userId = await verifyAuth(req);
     if (!userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

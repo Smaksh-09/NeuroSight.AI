@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { FaBrain, FaLungs, FaHeartbeat, FaShieldAlt, FaUserMd, FaChartLine } from 'react-icons/fa';
+import { FaBrain, FaShieldAlt, FaUserMd, FaChartLine } from 'react-icons/fa';
 
 export default function About() {
   const features = [

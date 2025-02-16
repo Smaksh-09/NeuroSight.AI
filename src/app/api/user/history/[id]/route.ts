@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 import { connectDB } from '@/app/Lib/db';
 import Job from '@/app/Lib/models/Jobs';
 import { verifyAuth } from '@/app/Lib/auth';

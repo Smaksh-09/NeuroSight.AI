@@ -1,9 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
+
 import { motion } from 'framer-motion';
 import NavBar from '../../components/NavBar';
-import BackButton from '../../components/BackButton';
-import { FaWalking, FaBed, FaPills, FaPlus } from 'react-icons/fa';
 import StepsTracker from '../components/StepsTracker';
 import SleepAnalysis from '../components/SleepAnalysis';
 import MedicationReminders from '../components/MedicationReminders';
