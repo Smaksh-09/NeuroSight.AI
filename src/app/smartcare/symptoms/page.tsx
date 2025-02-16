@@ -121,7 +121,7 @@ Please provide a comprehensive analysis in the following format:
 - Red flags to watch for
 - Emergency symptoms
 - When to seek immediate care
- !Do not send ** in the response!
+ !Do not send ** in the response! Dont BOLD Any of the text!
 Note: This is not a definitive diagnosis. Always consult healthcare professionals for proper medical evaluation.`;
 
       const res = await fetch('/api/analyze-symptoms', {

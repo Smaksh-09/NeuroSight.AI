@@ -12,31 +12,31 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="bg-transparent px-8 py-4 shadow-md sticky top-0 z-50">
+    <nav className="bg-white px-8 py-4 shadow-md sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         
         {/* Logo Section */}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl font-bold text-white">NeuroSight</span>
+          <span className="text-xl font-bold text-blue-900">NeuroSight</span>
         </Link>
 
         {/* Navigation Links */}
         <div className="hidden md:flex space-x-6">
-          <Link href="/" className="text-white hover:text-blue-500 transition-colors">
+          <Link href="/" className="text-blue-900 hover:text-blue-500 transition-colors">
             Home
           </Link>
           {isAuthenticated && (
-            <Link href="/features" className="text-white hover:text-blue-500 transition-colors">
+            <Link href="/features" className="text-blue-900 hover:text-blue-500 transition-colors">
               Diagnostics Hub
             </Link>
           )}
          
-          <Link href="/smartcare" className="text-white hover:text-blue-500 transition-colors">
+          <Link href="/smartcare" className="text-blue-900 hover:text-blue-500 transition-colors">
             SmartCare
           </Link>
-          <Link href="/about" className="text-white hover:text-blue-500 transition-colors">
+          {/* <Link href="/about" className="text-blue-900 hover:text-blue-500 transition-colors">
             About
-          </Link>
+          </Link> */}
         </div>
 
         {/* Action Buttons */}
