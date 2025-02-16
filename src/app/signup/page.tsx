@@ -17,18 +17,55 @@ export default function Signup() {
   const decorationRef = useRef<HTMLDivElement>(null);
   const { login } = useAuth();
   const router = useRouter();
+  const containerRef = useRef(null);
+  const ballsRef = useRef<HTMLDivElement[]>([]);
+
+  // Add this to store ball positions
+  const ballPositions = useRef(
+    [...Array(6)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`
+    }))
+  );
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     
+    // Animate decorative elements first
     tl.fromTo(decorationRef.current,
       { opacity: 0, scale: 0.8 },
       { opacity: 1, scale: 1, duration: 1 }
-    ).fromTo(formRef.current,
+    )
+    
+    // Animate form
+    .fromTo(formRef.current,
       { opacity: 0, y: 50 },
       { opacity: 1, y: 0, duration: 0.8 },
       '-=0.5'
-    );
+    )
+    
+    // Animate floating balls
+    ballsRef.current.forEach((ball, index) => {
+      const randomX = Math.random() * 100 - 50;
+      const randomY = Math.random() * 100 - 50;
+      
+      gsap.to(ball, {
+        x: randomX,
+        y: randomY,
+        duration: 2 + Math.random() * 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: index * 0.2
+      });
+    });
+
+    return () => {
+      tl.kill();
+      ballsRef.current.forEach(ball => {
+        gsap.killTweensOf(ball);
+      });
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,7 +74,7 @@ export default function Signup() {
     setError('');
 
     try {
-      const signupRes = await fetch('/api/auth/signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,13 +82,13 @@ export default function Signup() {
         body: JSON.stringify({ username, email, password }),
       });
 
-      const signupData = await signupRes.json();
+      const data = await res.json();
 
-      if (!signupRes.ok) {
-        throw new Error(signupData.error || 'Signup failed');
+      if (!res.ok) {
+        throw new Error(data.error || 'Signup failed');
       }
 
-      // Auto login after successful signup
+      // Auto-login after successful signup
       const loginRes = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -80,11 +117,26 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      {/* Animated background elements */}
+      {[...Array(6)].map((_, index) => (
+        <div
+          key={index}
+          //@ts-ignore
+          ref={(el) => (ballsRef.current[index] = el as HTMLDivElement)}
+          className="absolute w-32 h-32 rounded-full bg-blue-500/20 backdrop-blur-md"
+          style={{
+            left: ballPositions.current[index].left,
+            top: ballPositions.current[index].top,
+            transform: 'translate(-50%, -50%)'
+          }}
+        />
+      ))}
+
       <div className="absolute top-0 right-0 p-4">
         <Link 
           href="/login" 
-          className="text-blue-600 hover:text-blue-800 font-semibold"
+          className="text-blue-300 hover:text-blue-400 transition-colors font-semibold"
         >
           Already have an account?
         </Link>
@@ -92,109 +144,114 @@ export default function Signup() {
 
       <div className="max-w-6xl w-full flex flex-col md:flex-row items-center gap-8">
         {/* Decorative Section */}
-        <div ref={decorationRef} className="w-full md:w-1/2 p-8">
-          <div className="text-center md:text-left">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Join Our Platform
+        <div ref={decorationRef} className="w-full md:w-1/2 p-8 z-50">
+          <div className="text-center md:text-left z-50">
+            <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+              Join Our Community
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
-              Access advanced AI medical imaging analysis tools
+            <p className="text-xl text-blue-100 mb-8 drop-shadow-md">
+              Access advanced AI-powered medical imaging analysis tools
             </p>
-            <div className="bg-blue-600 h-1 w-20 mx-auto md:mx-0"></div>
+            <div className="bg-blue-400 h-1 w-20 mx-auto md:mx-0"></div>
           </div>
           
           <div className="mt-12 hidden md:block">
             <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-100 rounded-full"></div>
-              <div className="absolute top-8 right-12 w-16 h-16 bg-blue-200 rounded-full"></div>
-              <div className="absolute bottom-12 left-16 w-20 h-20 bg-blue-300 rounded-full"></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-400/20 rounded-full backdrop-blur-sm"></div>
+              <div className="absolute top-8 right-12 w-16 h-16 bg-blue-300/20 rounded-full backdrop-blur-sm"></div>
+              <div className="absolute bottom-12 left-16 w-20 h-20 bg-blue-500/20 rounded-full backdrop-blur-sm"></div>
             </div>
           </div>
         </div>
 
         {/* Form Section */}
-        <div ref={formRef} className="w-full md:w-1/2 max-w-md">
-          <div className="bg-white p-8 rounded-2xl shadow-xl">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Username
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                    <FaUser className="text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                    placeholder="Choose a username"
-                    required
-                  />
-                </div>
-              </div>
+        <div
+          ref={formRef}
+          className="w-full md:w-1/2 max-w-md p-8 rounded-2xl backdrop-blur-lg bg-white/10 border border-blue-300/20 shadow-xl relative"
+        >
+          <h2 className="text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">
+            Create Account
+          </h2>
 
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                    <FaEnvelope className="text-gray-400" />
-                  </div>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-blue-100 mb-2 font-medium">Username</label>
+              <div className="relative">
+                <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-300" />
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full py-3 pl-10 pr-4 bg-white/10 border border-blue-300/20 rounded-lg 
+                    text-white placeholder-blue-200/60 focus:outline-none focus:border-blue-400 
+                    backdrop-blur-sm transition-colors"
+                  placeholder="Choose a username"
+                />
               </div>
+            </div>
 
-              <div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                    <FaLock className="text-gray-400" />
-                  </div>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
-                    placeholder="Create a password"
-                    required
-                  />
-                </div>
+            <div>
+              <label className="block text-blue-100 mb-2 font-medium">Email</label>
+              <div className="relative">
+                <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-300" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full py-3 pl-10 pr-4 bg-white/10 border border-blue-300/20 rounded-lg 
+                    text-white placeholder-blue-200/60 focus:outline-none focus:border-blue-400 
+                    backdrop-blur-sm transition-colors"
+                  placeholder="Enter your email"
+                />
               </div>
+            </div>
 
-              {error && (
-                <div className="text-red-500 text-sm text-center">
-                  {error}
+            <div>
+              <label className="block text-blue-100 mb-2 font-medium">Password</label>
+              <div className="relative">
+                <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-300" />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full py-3 pl-10 pr-4 bg-white/10 border border-blue-300/20 rounded-lg 
+                    text-white placeholder-blue-200/60 focus:outline-none focus:border-blue-400 
+                    backdrop-blur-sm transition-colors"
+                  placeholder="Choose a password"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className="text-red-400 text-sm text-center">
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-blue-600/80 text-white rounded-lg font-semibold 
+                hover:bg-blue-700/90 transition-all duration-300 backdrop-blur-sm 
+                border border-blue-400/30 hover:scale-[1.02]"
+            >
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <FaSpinner className="animate-spin mr-2" />
+                  Creating account...
                 </div>
+              ) : (
+                'Sign Up'
               )}
+            </button>
+          </form>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-blue-300 flex items-center justify-center"
-              >
-                {loading ? (
-                  <>
-                    <FaSpinner className="animate-spin mr-2" />
-                    Creating Account...
-                  </>
-                ) : (
-                  'Create Account'
-                )}
-              </button>
-            </form>
-          </div>
+          <p className="mt-6 text-center text-blue-100">
+            Already have an account?{' '}
+            <Link href="/login" className="text-blue-300 hover:text-blue-400 transition-colors">
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     </div>
