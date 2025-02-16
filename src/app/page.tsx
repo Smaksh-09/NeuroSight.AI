@@ -3,6 +3,7 @@ import NavBar from "./components/NavBar";
 import HowTo from './components/HowTo';
 import DailyFacts from './components/DailyFacts';
 import Background from "./components/Background";
+import SmartCarePromo from "./components/SmartCarePromo";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <NavBar/>
         <Hero/>
         <HowTo />
+        <SmartCarePromo />
         <DailyFacts />
       </div>
     </div>
