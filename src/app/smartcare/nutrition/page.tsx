@@ -200,7 +200,6 @@ export default function NutritionPlanner() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-900 to-black">
       <NavBar />
-      <BackButton />
       
       <div className="container mx-auto px-4 py-12 mt-12">
         {!showResults ? (
