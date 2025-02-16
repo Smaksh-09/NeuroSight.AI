@@ -27,14 +27,15 @@ export default function NavBar() {
           </Link>
           {isAuthenticated && (
             <Link href="/features" className="text-white hover:text-blue-500 transition-colors">
-              Features
+              Diagnostics Hub
             </Link>
           )}
-          <Link href="/about" className="text-white hover:text-blue-500 transition-colors">
-            About
-          </Link>
+         
           <Link href="/smartcare" className="text-white hover:text-blue-500 transition-colors">
             SmartCare
+          </Link>
+          <Link href="/about" className="text-white hover:text-blue-500 transition-colors">
+            About
           </Link>
         </div>
 
