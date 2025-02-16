@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import NavBar from '../../components/NavBar';
+import BackButton from '../../components/BackButton';
 import { FaCloudUploadAlt, FaSpinner, FaFileAlt, FaListAlt } from 'react-icons/fa';
 
 export default function MedicalReport() {
@@ -87,6 +88,7 @@ export default function MedicalReport() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <NavBar />
+      <BackButton />
       <div className="container mx-auto px-4 py-12">
         {/* Header Section */}
         <div ref={headerRef} className="text-center mb-12">

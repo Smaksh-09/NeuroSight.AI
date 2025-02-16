@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import NavBar from '../../components/NavBar';
+import BackButton from '../../components/BackButton';
 import { FaCloudUploadAlt, FaSpinner } from 'react-icons/fa';
 
 export default function Brain() {
@@ -98,6 +99,7 @@ export default function Brain() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <NavBar />
+      <BackButton />
       <div ref={containerRef} className="container mx-auto px-4 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import NavBar from '../../components/NavBar';
+import BackButton from '../../components/BackButton';
 import { FaCloudUploadAlt, FaSpinner, FaSun } from 'react-icons/fa';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
@@ -103,6 +104,7 @@ export default function Skin() {
     <ProtectedRoute>
       <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
         <NavBar />
+        <BackButton />
         <div className="container mx-auto px-4 py-12">
           <div ref={headerRef} className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
