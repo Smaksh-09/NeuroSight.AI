@@ -32,7 +32,7 @@ export async function POST(req: Request) {
       - Mention the importance of professional medical evaluation
       - Include general lung health recommendations
       - Do not include * in the response
-      
+      Do not include ** in the response.
       Please format the response in a clear, compassionate narrative style that is easy for patients to understand while being informative.
     `;
 

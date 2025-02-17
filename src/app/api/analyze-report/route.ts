@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
-import { connectDB } from '@/app/Lib/db';
-import Job from '@/app/Lib/models/Jobs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(req: Request) {
   try {
-    await connectDB();
-
     const formData = await req.formData();
     const file = formData.get('report') as File;
     
@@ -52,7 +48,7 @@ export async function POST(req: Request) {
          - General health maintenance advice
          - Preventive measures
          - Any other relevant information
-      
+      Do not include ** in the response.
       Please use simple language that patients can understand while maintaining medical accuracy.
       Limit response to 2500 characters.`;
 
@@ -70,22 +66,14 @@ export async function POST(req: Request) {
       const response = await result.response;
       const text = response.text();
 
-      // Save job to database
-      const newJob = new Job({
-        fileName: file.name,
-        status: "completed",
-        result: text
-      });
-
-      await newJob.save();
-
-      return NextResponse.json({ 
-        result: text 
-      }, { status: 200 });
+      return NextResponse.json({ result: text }, { status: 200 });
 
     } catch (geminiError) {
       console.error('Gemini API error:', geminiError);
-      throw new Error('Failed to analyze with Gemini API');
+      return NextResponse.json(
+        { error: 'Failed to analyze with Gemini API' },
+        { status: 500 }
+      );
     }
 
   } catch (error) {
@@ -103,4 +91,4 @@ export const config = {
   api: {
     bodyParser: false,
   },
-}; 
+};
