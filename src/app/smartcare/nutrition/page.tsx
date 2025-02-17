@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar';
 import { FaArrowRight, FaArrowLeft, FaSpinner } from 'react-icons/fa';
 import ResultsDisplay from '../components/ResultsDisplay';
 import BackButton from '../../components/BackButton';
+import NutritionResults from '../components/NutritionResults';
 
 // Quiz questions array (your existing questions)
 const quizQuestions = [
@@ -176,7 +177,7 @@ export default function NutritionPlanner() {
       - Essential supplements
       - Dosage recommendations
       - Timing of intake
-      Make sure to not send ** in the response!
+      Do not send ** in the response!
       Make all recommendations specific and actionable.`;
 
       const res = await fetch('/api/generate-plan', {
@@ -316,7 +317,7 @@ export default function NutritionPlanner() {
             )}
           </>
         ) : (
-          <ResultsDisplay response={response} />
+          <NutritionResults response={response} />
         )}
       </div>
     </div>

@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
     
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     return Response.json(sections);
   } catch (error) {
     console.error('Error:', error);
-    return Response.json({ error: 'Failed to generate plan' }, { status: 500 });
+    return Response.json({ error: 'Failed to generate nutrition plan' }, { status: 500 });
   }
 }
 
