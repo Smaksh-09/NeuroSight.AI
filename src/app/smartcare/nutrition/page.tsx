@@ -177,7 +177,7 @@ export default function NutritionPlanner() {
       - Essential supplements
       - Dosage recommendations
       - Timing of intake
-      Do not send ** in the response!
+      Avoid Markdown formatting and remove all special characters like asterisks (*) from the response.
       Make all recommendations specific and actionable.`;
 
       const res = await fetch('/api/generate-plan', {
@@ -189,6 +189,10 @@ export default function NutritionPlanner() {
       if (!res.ok) throw new Error('Failed to generate plan');
 
       const data = await res.json();
+      // Clean the response by removing asterisks
+      if (typeof data.content === 'string') {
+        data.content = data.content.replace(/\*\*/g, '').replace(/\*/g, '');
+      }
       setResponse(data);
       setShowResults(true);
     } catch (err) {
@@ -322,4 +326,4 @@ export default function NutritionPlanner() {
       </div>
     </div>
   );
-} 
+}
